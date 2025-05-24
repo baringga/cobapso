@@ -30,17 +30,21 @@ jobs:
       - name: Check Java version
         run: java -version
 
-      # Step 4: Run SonarCloud Analysis
+      # Step 4: Run SonarCloud Analysis (manual CLI, not the action)
+      - name: Install SonarScanner
+        run: |
+          npm install -g sonarqube-scanner
+
       - name: 🔍 SonarCloud Analysis
-        uses: SonarSource/sonarcloud-github-action@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        with:
-          args: >
-            -Dsonar.organization=your-org-name
-            -Dsonar.projectKey=your-project-key
-            -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
+        run: |
+          npx sonar-scanner \
+            -Dsonar.organization=your-org-name \
+            -Dsonar.projectKey=your-project-key \
+            -Dsonar.host.url=https://sonarcloud.io \
+            -Dsonar.login=$SONAR_TOKEN \
+            -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info \
             -X
 
   build:
