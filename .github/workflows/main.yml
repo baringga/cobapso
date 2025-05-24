@@ -40,8 +40,8 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
           npx sonar-scanner \
-            -Dsonar.organization=<your-sonarcloud-org> \
-            -Dsonar.projectKey=<your-sonarcloud-project-key> \
+            -Dsonar.organization=my-org-asli \
+            -Dsonar.projectKey=my-project-key-asli \
             -Dsonar.host.url=https://sonarcloud.io \
             -Dsonar.token=$SONAR_TOKEN \
             -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info \
