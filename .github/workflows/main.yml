@@ -26,7 +26,11 @@ jobs:
           java-version: '17'
           distribution: 'temurin'  # Gunakan Temurin untuk Java 17
 
-      # Step 3: Run SonarCloud Analysis
+      # Step 3: Check Java version
+      - name: Check Java version
+        run: java -version
+
+      # Step 4: Run SonarCloud Analysis
       - name: 🔍 SonarCloud Analysis
         uses: SonarSource/sonarcloud-github-action@v1
         env:
