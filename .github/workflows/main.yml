@@ -1,0 +1,96 @@
+name: Build and Deploy React App to AWS EC2
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  pull-requests: read
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🔄 Checkout Repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: 🔍 SonarCloud Analysis
+        uses: SonarSource/sonarcloud-github-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          args: >
+            -Dsonar.organization=your-org-name
+            -Dsonar.projectKey=your-project-key
+            -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
+            -X
+
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🧾 Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: 🐳 Build Docker Image
+        run: |
+          docker build --no-cache -t shopping-list-app .
+
+      - name: 💾 Save Docker Image to Tarball
+        run: |
+          docker save -o shopping-list-app.tar shopping-list-app
+
+      - name: ☁️ Upload Docker Image as Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: shopping-list-image
+          path: shopping-list-app.tar
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: ☁️ Download Docker Image Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: shopping-list-image
+
+      - name: 🔐 SSH to EC2 and Prepare Directory
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
+          key: ${{ secrets.EC2_SSH_KEY }}
+          port: 22
+          script: |
+            mkdir -p ~/docker-images/
+            rm -f ~/docker-images/shopping-list-app.tar
+
+      - name: 🚀 Upload Docker Tarball to EC2
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
+          key: ${{ secrets.EC2_SSH_KEY }}
+          source: shopping-list-app.tar
+          target: ~/docker-images/
+
+      - name: 🔁 SSH to EC2 and Deploy Container
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
+          key: ${{ secrets.EC2_SSH_KEY }}
+          port: 22
+          script: |
+            docker load -i ~/docker-images/shopping-list-app.tar
+            docker stop shopping-list-container || true
+            docker rm shopping-list-container || true
+            docker run -d --name shopping-list-container -p 80:80 shopping-list-app
+            rm -f ~/docker-images/shopping-list-app.tar
