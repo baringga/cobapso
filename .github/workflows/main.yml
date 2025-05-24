@@ -23,6 +23,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '17'
+          distribution: 'adoptopenjdk'  # Pilihan distribusi Java
 
       - name: 🔍 SonarCloud Analysis
         uses: SonarSource/sonarcloud-github-action@v1
