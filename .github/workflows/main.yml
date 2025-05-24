@@ -22,7 +22,7 @@ jobs:
         uses: SonarSource/sonarcloud-github-action@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.62cf3ead68f8d7381d031c21bcd5c8a370dfd7ef }}
         with:
           args: >
             -Dsonar.organization=your-org-name
