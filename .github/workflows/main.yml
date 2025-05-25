@@ -23,3 +23,5 @@ jobs:
             -Dsonar.organization=baringga
             -Dsonar.projectKey=baringga_cobapso
             -Dsonar.python.coverage.reportPaths=coverage.xml
+
+#abc
