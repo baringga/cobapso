@@ -59,5 +59,20 @@ function App() {
     </div>
   );
 }
+const name = "SonarQube"  // Missing semicolon
+// Assuming there's no function 'calculateTotalPrice'
+const total = calculateTotalPrice(100, 50);
+const unusedVar = "This variable is never used";
+function calculate(a, b, c, d, e, f, g, h, i) {
+    return a + b + c + d + e + f + g + h + i;
+}
+function printMessage(message) {
+    console.log(message);
+    // Missing return statement
+}
+if (x == 5) {
+    // this should be !== instead of ==
+    console.log("X is 5");
+}
 
 export default App;
