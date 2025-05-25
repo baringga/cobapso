@@ -3,7 +3,7 @@ name: "sonar_cloud_scan_github_actions"
 on:
   push:
     branches:
-      - main
+      - cobapso
 
 jobs:
   DemoSonarCloudScan:
