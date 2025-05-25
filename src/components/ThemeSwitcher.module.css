@@ -23,47 +23,94 @@
     appearance: none;
     -webkit-appearance: none;
     outline: none;
-    height: calc(var(--wrapperSize) * 0.2);
+    height: calc(var(--wrapperSize) * 0.22);
     width: 100%;
     border: 0.2em solid hsl(var(--muted));
-    box-shadow: 0 0 0.8em hsl(var(--accent) / 0.4);
+    box-shadow: 0 2px 16px 0 hsl(var(--accent) / 0.25);
     border-radius: 100vmax;
-    background: linear-gradient(to right,
-        hsl(0, 50%, 50%),
-        hsl(25, 50%, 50%),
-        hsl(50, 50%, 50%),
-        hsl(75, 50%, 50%),
-        hsl(100, 50%, 50%),
-        hsl(125, 50%, 50%),
-        hsl(150, 50%, 50%),
-        hsl(175, 50%, 50%),
-        hsl(200, 50%, 50%),
-        hsl(225, 50%, 50%),
-        hsl(250, 50%, 50%),
-        hsl(275, 50%, 50%),
-        hsl(300, 50%, 50%),
-        hsl(325, 50%, 50%),
-        hsl(350, 50%, 50%));
+    background: linear-gradient(90deg,
+      hsl(0, 80%, 60%) 0%,
+      hsl(45, 90%, 60%) 20%,
+      hsl(120, 80%, 60%) 40%,
+      hsl(200, 80%, 60%) 60%,
+      hsl(260, 80%, 60%) 80%,
+      hsl(320, 80%, 60%) 100%
+    );
+    transition: box-shadow 0.3s, border-color 0.3s;
+  }
+  
+  .picker:hover,
+  .picker:focus {
+    border-color: hsl(var(--accent));
+    box-shadow: 0 4px 24px 0 hsl(var(--accent) / 0.35);
   }
   
   .picker::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
-    height: calc(var(--wrapperSize) * 0.35);
-    width: calc(var(--wrapperSize) * 0.35);
-    border: none;
+    height: calc(var(--wrapperSize) * 0.38);
+    width: calc(var(--wrapperSize) * 0.38);
+    border: 3px solid #fff;
     box-shadow:
-      0 0 0 .25em hsl(var(--muted)),
-      0 0 0 -.4em hsl(var(--accent) / 0.8);
-    border-radius: 100vmax;
-    background-color: hsl(var(--accent));
-    cursor: ew-resize;
+      0 2px 8px 0 hsl(var(--accent) / 0.3),
+      0 0 0 .25em hsl(var(--muted));
+    border-radius: 50%;
+    background: radial-gradient(circle at 60% 40%, hsl(var(--accent)), #fff 80%);
+    cursor: pointer;
+    transition: box-shadow 0.3s, border 0.3s, background 0.3s;
   }
   
+  .picker:hover::-webkit-slider-thumb,
   .picker:focus::-webkit-slider-thumb {
     box-shadow:
-      0 0 0 .25em hsl(var(--muted)),
+      0 4px 16px 0 hsl(var(--accent) / 0.5),
       0 0 0 .45em hsl(var(--accent) / 0.8);
+    border: 3px solid hsl(var(--accent));
+    background: radial-gradient(circle at 40% 60%, #fff, hsl(var(--accent)) 80%);
+  }
+  
+  .picker::-moz-range-thumb {
+    height: calc(var(--wrapperSize) * 0.38);
+    width: calc(var(--wrapperSize) * 0.38);
+    border: 3px solid #fff;
+    box-shadow:
+      0 2px 8px 0 hsl(var(--accent) / 0.3),
+      0 0 0 .25em hsl(var(--muted));
+    border-radius: 50%;
+    background: radial-gradient(circle at 60% 40%, hsl(var(--accent)), #fff 80%);
+    cursor: pointer;
+    transition: box-shadow 0.3s, border 0.3s, background 0.3s;
+  }
+  
+  .picker:hover::-moz-range-thumb,
+  .picker:focus::-moz-range-thumb {
+    box-shadow:
+      0 4px 16px 0 hsl(var(--accent) / 0.5),
+      0 0 0 .45em hsl(var(--accent) / 0.8);
+    border: 3px solid hsl(var(--accent));
+    background: radial-gradient(circle at 40% 60%, #fff, hsl(var(--accent)) 80%);
+  }
+  
+  .picker::-ms-thumb {
+    height: calc(var(--wrapperSize) * 0.38);
+    width: calc(var(--wrapperSize) * 0.38);
+    border: 3px solid #fff;
+    box-shadow:
+      0 2px 8px 0 hsl(var(--accent) / 0.3),
+      0 0 0 .25em hsl(var(--muted));
+    border-radius: 50%;
+    background: radial-gradient(circle at 60% 40%, hsl(var(--accent)), #fff 80%);
+    cursor: pointer;
+    transition: box-shadow 0.3s, border 0.3s, background 0.3s;
+  }
+  
+  .picker:hover::-ms-thumb,
+  .picker:focus::-ms-thumb {
+    box-shadow:
+      0 4px 16px 0 hsl(var(--accent) / 0.5),
+      0 0 0 .45em hsl(var(--accent) / 0.8);
+    border: 3px solid hsl(var(--accent));
+    background: radial-gradient(circle at 40% 60%, #fff, hsl(var(--accent)) 80%);
   }
   
   .close {
@@ -71,4 +118,22 @@
     top: -2em;
     left: 50%;
     transform: translate(-50%, -50%);
+    background: hsl(var(--accent));
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 2.2em;
+    height: 2.2em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2em;
+    box-shadow: 0 2px 8px hsl(var(--accent) / 0.2);
+    cursor: pointer;
+    transition: background 0.3s, box-shadow 0.3s;
+  }
+  
+  .close:hover {
+    background: hsl(var(--accent) / 0.8);
+    box-shadow: 0 4px 16px hsl(var(--accent) / 0.3);
   }
