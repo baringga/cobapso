@@ -61,30 +61,3 @@ function App() {
 }
 //123
 export default App;
-
-return (
-    <div className="container">
-      <header>
-        <h1>Daftar Belanja Saya</h1>
-      </header>
-      {isEditing && (
-        <EditForm
-          editedTask={editedItem} // Pass the edited item
-          updateTask={updateItem} // Pass the update function
-          closeEditMode={() => setIsEditing(false)} // Close edit mode
-        />
-      )}
-      <CustomForm addItem={addItem} />
-      {items && (
-        <TaskList
-          items={items}
-          deleteItem={deleteItem}
-          enterEditMode={enterEditMode} // Pass the edit mode function
-        />
-      )}
-      <ThemeSwitcher />
-    </div>
-  );
-}
-//123
-export default App;
